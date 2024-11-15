@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do</title>
+</head>
+
+<body>
+    <h1>To Do</h1>
+    <form method="post" action="/task" data-th-object="${task}">
+        <input type="hidden" name="sessionKey" data-th-value="${sessionKey}">
+        <table>
+            <tr>
+                <td>Task: </td>
+                <td><input type="text" data-th-field="*{name}"></td>
+            </tr>
+            <tr>
+                <td>Priority: </td>
+                <td>
+                    <select data-th-field="*{priority}">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Complete By: </td>
+                <td><input type="date" data-th-field="*{completeDate}"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <button type="submit">Add</button>
+                        <button type="submit" formmethod="post" formaction="/">Submit</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+    </form>
+    <br>
+    <div data-th-if="${#lists.isEmpty(taskList)}">Looks like you are free!</div>
+    <div data-th-unless="${#lists.isEmpty(taskList)}">To Do Table
+        <table>
+            <thead>
+                <tr>
+                    <td>Task</td>
+                    <td>Priority</td>
+                    <td>Complete By</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-th-each="t: ${taskList}">
+                    <td><span data-th-text="${t.name}"></span></td>
+                    <td><span data-th-text="${t.priority}"></span></td>
+                    <td><span data-th-text="${t.completeDate}"></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
